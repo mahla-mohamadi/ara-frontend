@@ -67,8 +67,25 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
               <svg className="w-5 h-5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeWidth="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
               </svg>
-
-              {user?.is_admin && (
+              {user ? (
+                <>
+                  {user.is_admin && (
+                    <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                      پنل ادمین
+                    </span>
+                  )}
+                  {user.is_customer && (
+                    <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                      پروفایل کاربری
+                    </span>
+                  )}
+                </>
+              ) : (
+                <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                  ورود / عضویت
+                </span>
+              )}
+              {/* {user?.is_admin && (
                   <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
                    پنل ادمین
                   </span>
@@ -77,10 +94,10 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                   <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
                     پروفایل کاربری
                   </span>
-              )}
-              <svg className="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              )} */}
+              {/* <svg className="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 9-7 7-7-7" />
-              </svg>
+              </svg> */}
             </button>
             {isOpenDropdown && (
                 <div id="userDropdown1" className="absolute top-full left-0 translate-y-2 z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700">
