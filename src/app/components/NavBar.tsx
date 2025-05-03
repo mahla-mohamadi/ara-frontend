@@ -1,28 +1,16 @@
 // Navbar.tsx
 import { useState } from "react";
+import Link from 'next/link';
 
 interface NavbarProps {
     user: { first_name: string; last_name: string; is_admin: boolean; is_customer: boolean } | null; // Accept user data as a prop
 }
-
 const Navbar: React.FC<NavbarProps> = ({ user }) => {
     const [isOpenDropdown, setIsOpenDropdown] = useState(false);
     const toggleDropdown = () => {
         setIsOpenDropdown(prevState => !prevState);
     };
     return (
-    // <nav className="bg-gray-800 p-4 text-white">
-    //   <div className="flex justify-between items-center">
-    //     <div className="text-xl">MyApp</div>
-    //     <div className="flex items-center">
-    //       {user ? (
-    //         <span className="mr-4">{`Hello, ${user.first_name} ${user.last_name}`}</span>
-    //       ) : (
-    //         <a href="/login" className="text-blue-400">Login</a>
-    //       )}
-    //     </div>
-    //   </div>
-    // </nav>
     <nav className="bg-white shadow-xl dark:bg-gray-800 antialiased">
       <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
         <div className="flex items-center justify-between">
@@ -69,37 +57,28 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
               </svg>
               {user ? (
                 <>
-                  {user.is_admin && (
+                  {user.is_admin ? (
                     <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
                       پنل ادمین
                     </span>
-                  )}
-                  {user.is_customer && (
+                  ) : user.is_customer ? (
                     <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
-                      پروفایل کاربری
+                      پروفایل مشتریان
+                    </span>
+                  ) : (
+                    <span className="flex text-sm font-medium text-gray-500 dark:text-gray-400">
+                      پروفایل کابران
                     </span>
                   )}
                 </>
               ) : (
-                <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                <Link href="/login" className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
                   ورود / عضویت
-                </span>
+                </Link>
               )}
-              {/* {user?.is_admin && (
-                  <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
-                   پنل ادمین
-                  </span>
-              )}
-              {user?.is_customer && (
-                  <span className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
-                    پروفایل کاربری
-                  </span>
-              )} */}
-              {/* <svg className="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 9-7 7-7-7" />
-              </svg> */}
+
             </button>
-            {isOpenDropdown && (
+            {user && isOpenDropdown && (
                 <div id="userDropdown1" className="absolute top-full left-0 translate-y-2 z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700">
                 <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
                     <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Account </a></li>

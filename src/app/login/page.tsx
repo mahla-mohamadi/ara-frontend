@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { setCookie } from '@/utils';
 import VantaBackground from '../VantaBackground';
 import { SVGArrow , SVGEye , SVGBlind} from '@/svg';
-import Modal from '@/app/components/Modal';
+import OtpModal from '@/app/components/OtpModal';
 import OtpInput from '@/app/components/OtpInput';
-
+import { sendOTP , loginWithOTP } from '../components/services/userService';
 
 
 const LoginPage: React.FC = () => {
@@ -19,24 +19,43 @@ const LoginPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
-    const handlePhoneSubmit = async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setError('');
 
-      if (!phone) {
-        setError('Please enter your.');
-        return;
-      }
-      try {
-        const response = await axios.post('http://localhost/ara-backend/public/api/sendotp', {
-          phone_number: phone,
-        });
-        setIsModalOpen(true); // Open modal to enter OTP
-      } catch (err) {
-        console.error('Login error:', err);
-        setError('خطا در ارسال کد. لطفاً دوباره تلاش کنید.');
-      }
-    };
+
+  // const handlePhoneSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setError('');
+
+  //   if (!phone) {
+  //     setError('Please enter your.');
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axios.post('http://localhost/ara-backend/public/api/sendotp', {
+  //       phone_number: phone,
+  //     });
+  //     setIsModalOpen(true); // Open modal to enter OTP
+  //   } catch (err) {
+  //     console.error('Login error:', err);
+  //     setError('خطا در ارسال کد. لطفاً دوباره تلاش کنید.');
+  //   }
+  // };
+  const handlePhoneSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!phone) {
+      setError('Please enter your.');
+      return;
+    }
+    try {
+      await sendOTP(phone);
+      setIsModalOpen(true);
+    } catch (err) {
+      setError('خطا در ارسال کد');
+    }
+  };
+
+  
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     
@@ -59,16 +78,33 @@ const LoginPage: React.FC = () => {
       setError('');  // Clear error when input is valid
     }
   };
+
+
+
+  // const handleOtpSubmit = async () => {
+  //   setError('');
+  //   try {
+  //     const response = await axios.post('http://localhost/ara-backend/public/api/loginotp', {
+  //       phone_number: phone,
+  //       otp_code: otp,
+  //     });
+  //     setCookie('authToken', response.data.access_token);
+  //     setIsModalOpen(false);
+  //     // router.push('/dashboard');
+  //     setTimeout(() => {
+  //       router.push('/');
+  //     }, 2000); // 200ms delay
+  //   } catch (err) {
+  //     setError('کد وارد شده اشتباه است.');
+  //   }
+  // };
+  
   const handleOtpSubmit = async () => {
     setError('');
     try {
-      const response = await axios.post('http://localhost/ara-backend/public/api/loginotp', {
-        phone_number: phone,
-        otp_code: otp,
-      });
-      setCookie('authToken', response.data.access_token);
+      const token = await loginWithOTP(phone, otp);
+      setCookie('authToken', token);
       setIsModalOpen(false);
-      // router.push('/dashboard');
       setTimeout(() => {
         router.push('/');
       }, 2000); // 200ms delay
@@ -117,7 +153,7 @@ const LoginPage: React.FC = () => {
               <SVGArrow />
             </button>
           </form>
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <OtpModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <h2 className="text-lg font-bold mb-4 text-center text-dark-700 dark:text-white">کد تایید</h2>
             <OtpInput onChange={(code) => setOtp(code)} />
             {error && <p className="text-sm text-red-500 text-center mb-2">{error}</p>}
@@ -135,7 +171,7 @@ const LoginPage: React.FC = () => {
                 تایید
               </button>
             </div>
-          </Modal>
+          </OtpModal>
         </div>
       </section>
     </div>

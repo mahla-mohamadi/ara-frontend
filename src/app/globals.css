@@ -4,13 +4,12 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-main:#FFB90D;
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+	--color-main:#FFB90D;
 	--color-main-50: #fffeea;
 	--color-main-100: #fff9c5;
 	--color-main-200: #fff385;
@@ -22,7 +21,6 @@
 	--color-main-800: #984b08;
 	--color-main-900: #7c3d0b;
 	--color-main-950: #481f00;
-	
 	--color-dark-50: #f5f6f6;
 	--color-dark-100: #e5e7e8;
 	--color-dark-200: #cdd0d4;
@@ -34,39 +32,34 @@
 	--color-dark-800: #414349;
 	--color-dark-900: #3a3c3f;
 	--color-dark-950: #1f2023;
-
-
-
-
 	--color-off: #f45252;
-  --color-off-50: #fef2f2;
-  --color-off-100: #ffe1e1;
-  --color-off-200: #ffc9c9;
-  --color-off-300: #fea3a3;
-  --color-off-400: #fb6e6e;
-  --color-off-500: #f45252;
-  --color-off-600: #e02222;
-  --color-off-700: #bd1818;
-  --color-off-800: #9c1818;
-  --color-off-900: #811b1b;
-  --color-off-950: #460909;
-  --color-neutral-50: #f8f8f8;
-  --color-neutral-100: #f3f3f3;
-  --color-neutral-200: #dcdcdc;
-  --color-neutral-300: #bdbdbd;
-  --color-neutral-400: #989898;
-  --color-neutral-500: #7c7c7c;
-  --color-neutral-600: #656565;
-  --color-neutral-700: #525252;
-  --color-neutral-800: #464646;
-  --color-neutral-900: #3d3d3d;
-  --color-neutral-950: #292929;
-  --text-heading: 26px;
-  --text-paragraph: 14px;
-  --text-paragraph: 14px;
-  --text-small: 12px;
+	--color-off-50: #fef2f2;
+	--color-off-100: #ffe1e1;
+	--color-off-200: #ffc9c9;
+	--color-off-300: #fea3a3;
+	--color-off-400: #fb6e6e;
+	--color-off-500: #f45252;
+	--color-off-600: #e02222;
+	--color-off-700: #bd1818;
+	--color-off-800: #9c1818;
+	--color-off-900: #811b1b;
+	--color-off-950: #460909;
+	--color-neutral-50: #f8f8f8;
+	--color-neutral-100: #f3f3f3;
+	--color-neutral-200: #dcdcdc;
+	--color-neutral-300: #bdbdbd;
+	--color-neutral-400: #989898;
+	--color-neutral-500: #7c7c7c;
+	--color-neutral-600: #656565;
+	--color-neutral-700: #525252;
+	--color-neutral-800: #464646;
+	--color-neutral-900: #3d3d3d;
+	--color-neutral-950: #292929;
+	--text-heading: 26px;
+	--text-paragraph: 14px;
+	--text-paragraph: 14px;
+	--text-small: 12px;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -80,7 +73,6 @@
 	src: url('/fonts/yekanbakhfanum/woff/YekanBakhFaNum-Thin.woff') format('woff'),   
 	url('/fonts/yekanbakhfanum/woff2/YekanBakhFaNum-Thin.woff2') format('woff2');		
 }
-
 @font-face {
 	font-family: Yekan Bakh FaNum;
 	font-style: normal;
@@ -142,4 +134,57 @@ body {
   color: var(--foreground);
   font-family: "Yekan Bakh FaNum" !important;
   direction: rtl;
+}
+
+@keyframes modalOpen {
+	0% {
+	  opacity: 0;
+	  transform: scale(0.9);
+	}
+	100% {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+}
+@keyframes modalClose {
+	0% {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+	100% {
+	  opacity: 0;
+	  transform: scale(0.9);
+	}
+}
+@keyframes overlayFadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		display: block;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+@keyframes overlayFadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+		display: none;
+	}
+}
+.modal-open {
+	animation: modalOpen 0.4s ease-in-out forwards; 
+}
+.modal-close {
+	animation: modalClose 0.4s ease-in-out forwards; 
+}
+.overlay-open {
+	animation: overlayFadeIn 0.4s ease-in-out forwards;
+}  
+.overlay-close {
+	animation: overlayFadeOut 0.4s ease-in-out forwards;
 }
